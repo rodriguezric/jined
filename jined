@@ -1,0 +1,96 @@
+#!/usr/bin/env python
+
+import click
+import json
+import sys
+
+from screens import screen_clear
+
+user_input = None
+json_dict = {}
+cursor = {}
+keys = []
+
+
+def json_load_file(filename):
+    json_dict = {}
+    try:
+        with(open(filename)) as f:
+            json_dict = json.load(f)
+    except Exception:
+        print("Error: Invalid JSON, defaulting to empty dictionary.")
+
+    return json_dict
+
+
+def json_print():
+    print(keys)
+    key_header = "> ".join(keys)
+    print(f"Root > {key_header}")
+    print(cursor)
+
+
+if len(sys.argv) > 1:
+    json_dict = json_load_file(sys.argv[1])
+
+while True:
+    screen_clear()
+    if len(keys) > 0:
+        cursor = json_dict[keys[0]]
+
+        for key in keys[1:]:
+            n_cursor = cursor[key]
+            cursor = n_cursor
+
+    else:
+        cursor = json_dict
+
+    json_print()
+
+    user_input = click.getchar()
+
+    # Execute mode
+    if user_input == ":":
+        u2 = input(":")
+
+        if u2 == "q":
+            exit()
+
+        if u2 == "e":
+            filename = input("Filename: ")
+            json_dict = json_load_file(filename)
+
+        if u2 == "w":
+            filename = input("Filename: ")
+            with open(filename, "w") as f:
+                f.write(json.dumps(json_dict))
+
+    if user_input == "a":
+        print("Add/Update Key")
+        key = input("Key:")
+        val = input("Value:")
+
+        if val == "{}":
+            val = {}
+
+        cursor[key] = val
+
+    if user_input == "d":
+        print("Delete Key")
+        key = input("Key:")
+
+        if cursor.get(key):
+            del cursor[key]
+
+    if user_input == "<":
+        try:
+            keys.pop()
+        except Exception:
+            print("No keys to pop")
+
+    if user_input == ">":
+        if type(cursor) is dict:
+            key = input(">")
+
+            if key in cursor:
+                keys.append(key)
