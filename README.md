@@ -39,6 +39,7 @@ to the level of the cursor in the JSON object and `pop` back to navigate back up
 * `:` - Enter `Execute Mode`
 * `a` - Add/Update. Prompts for a key, then for a value. If the key exists, update its value otherwise create it.
 * `d` - Delete. Prompts for a key. If it exists, delete it.
+* `k` - Keys. List keys available at current cursor.
 * `>` - Cursor-to. Prompts for a key. If it exists, move the cursor to the key.
 * `<` - Cursor-back. Pops the cursor back one level in JSON object. 
 
@@ -52,7 +53,6 @@ to the level of the cursor in the JSON object and `pop` back to navigate back up
 ## TODO / Wishlist
 ### Features
 * Tab autocomplete ;_;
-* List keys for cursor - Perhaps with `k` command.
 * Verbose execution commands - for people who like to type more.
 * Execute mode equivalent entries for commands? (I don't know, maybe)
 
