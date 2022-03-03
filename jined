@@ -24,7 +24,6 @@ def json_load_file(filename):
 
 
 def json_print():
-    print(keys)
     key_header = "> ".join(keys)
     print(f"Root > {key_header}")
     print(cursor)
@@ -81,6 +80,11 @@ while True:
 
         if cursor.get(key):
             del cursor[key]
+
+    if user_input == "k":
+        print("Keys:")
+        print("\n".join([f"\t{x}" for x in cursor.keys()]))
+        click.getchar()
 
     if user_input == "<":
         try:
