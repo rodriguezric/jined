@@ -45,9 +45,9 @@ to the level of the cursor in the JSON object and `pop` back to navigate back up
 
 
 ## Execute Mode
-* `q` - Quit the application.
-* `w` - Write JSON object to a file.
-* `e` - Open JSON file to edit.
+* `q`, `quit`  - Quit the application.
+* `w`, `write` - Write JSON object to a file.
+* `e`, `edit`  - Open JSON file to edit.
 
 
 ## TODO / Wishlist

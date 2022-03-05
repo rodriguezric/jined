@@ -31,7 +31,7 @@ def json_print():
 
 
 def upsert_key():
-    print("Add/Update Key")
+    print("Upsert>")
     key = input("Key:")
     val = input("Value:")
 
