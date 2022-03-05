@@ -60,6 +60,3 @@ to the level of the cursor in the JSON object and `pop` back to navigate back up
 * Refactor code, a lot.
 * Write tests.
 
-
-
-

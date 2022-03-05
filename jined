@@ -8,6 +8,7 @@ from screens import screen_clear
 
 user_input = None
 json_dict = {}
+filename = ""
 cursor = {}
 keys = []
 
@@ -29,8 +30,20 @@ def json_print():
     print(cursor)
 
 
+def upsert_key():
+    print("Add/Update Key")
+    key = input("Key:")
+    val = input("Value:")
+
+    if val == "{}":
+        val = {}
+
+    cursor[key] = val
+
+
 if len(sys.argv) > 1:
-    json_dict = json_load_file(sys.argv[1])
+    filename = sys.argv[1]
+    json_dict = json_load_file(filename)
 
 while True:
     screen_clear()
@@ -52,27 +65,22 @@ while True:
     if user_input == ":":
         u2 = input(":")
 
-        if u2 == "q":
+        if u2 in ["q", "quit"]:
             exit()
 
-        if u2 == "e":
+        if u2 in ["e", "edit"]:
             filename = input("Filename: ")
             json_dict = json_load_file(filename)
 
-        if u2 == "w":
-            filename = input("Filename: ")
+        if u2 in ["w", "write"]:
+            if not filename:
+                filename = input("Filename: ")
+
             with open(filename, "w") as f:
                 f.write(json.dumps(json_dict))
 
     if user_input == "a":
-        print("Add/Update Key")
-        key = input("Key:")
-        val = input("Value:")
-
-        if val == "{}":
-            val = {}
-
-        cursor[key] = val
+        upsert_key()
 
     if user_input == "d":
         print("Delete Key")
