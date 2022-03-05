@@ -29,6 +29,7 @@ to the level of the cursor in the JSON object and `pop` back to navigate back up
 * Edit a JSON object by adding or updating keys.
     * Currently, all values added to a key are `text` or `JSON`
 * Create nested JSON objects by setting `{}` as the value
+* Create nested LIST objects by setting `[] as the value
 
 ### File IO!
 * Open JSON files.
@@ -55,6 +56,7 @@ to the level of the cursor in the JSON object and `pop` back to navigate back up
 * Tab autocomplete ;_;
 * Verbose execution commands - for people who like to type more.
 * Execute mode equivalent entries for commands? (I don't know, maybe)
+* Fix upserting a normal value (non-dictionary / non-list)
 
 ### Sanity
 * Refactor code, a lot.

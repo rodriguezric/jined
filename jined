@@ -30,15 +30,40 @@ def json_print():
     print(cursor)
 
 
-def upsert_key():
-    print("Upsert>")
-    key = input("Key:")
+def upsert_key(cursor, keys):
+    print("Upsert:")
+    if type(cursor) is dict:
+        key = input("Key:")
+
     val = input("Value:")
 
     if val == "{}":
         val = {}
 
-    cursor[key] = val
+    if val == "[]":
+        val = []
+
+    if type(cursor) is dict:
+        cursor[key] = val
+
+    elif type(cursor) is list:
+        cursor.append(val)
+
+    else:
+        cursor = val
+
+
+def get_cursor(json_dict, keys):
+    if len(keys) > 0:
+        cursor = json_dict[keys[0]]
+
+        for key in keys[1:]:
+            n_cursor = cursor[key]
+            cursor = n_cursor
+    else:
+        cursor = json_dict
+
+    return cursor
 
 
 def write_to_file(filename):
@@ -55,16 +80,7 @@ if len(sys.argv) > 1:
 
 while True:
     screen_clear()
-    if len(keys) > 0:
-        cursor = json_dict[keys[0]]
-
-        for key in keys[1:]:
-            n_cursor = cursor[key]
-            cursor = n_cursor
-
-    else:
-        cursor = json_dict
-
+    cursor = get_cursor(json_dict, keys)
     json_print()
 
     user_input = click.getchar()
@@ -74,6 +90,7 @@ while True:
         u2 = input(":")
 
         if u2 in ["q", "quit"]:
+            screen_clear()
             exit()
 
         if u2 in ["e", "edit"]:
@@ -84,19 +101,21 @@ while True:
             write_to_file(filename)
 
     if user_input == "a":
-        upsert_key()
+        upsert_key(cursor, keys)
 
     if user_input == "d":
-        print("Delete Key")
-        key = input("Key:")
+        if type(cursor) is dict:
+            print("Delete Key")
+            key = input("Key:")
 
-        if cursor.get(key):
-            del cursor[key]
+            if cursor.get(key):
+                del cursor[key]
 
     if user_input == "k":
-        print("Keys:")
-        print("\n".join([f"\t{x}" for x in cursor.keys()]))
-        click.getchar()
+        if type(cursor) is dict:
+            print("Keys:")
+            print("\n".join([f"\t{x}" for x in cursor.keys()]))
+            click.getchar()
 
     if user_input == "<":
         try:
