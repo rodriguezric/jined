@@ -41,6 +41,14 @@ def upsert_key():
     cursor[key] = val
 
 
+def write_to_file(filename):
+    if not filename:
+        filename = input("Filename: ")
+
+    with open(filename, "w") as f:
+        f.write(json.dumps(json_dict))
+
+
 if len(sys.argv) > 1:
     filename = sys.argv[1]
     json_dict = json_load_file(filename)
@@ -73,11 +81,7 @@ while True:
             json_dict = json_load_file(filename)
 
         if u2 in ["w", "write"]:
-            if not filename:
-                filename = input("Filename: ")
-
-            with open(filename, "w") as f:
-                f.write(json.dumps(json_dict))
+            write_to_file(filename)
 
     if user_input == "a":
         upsert_key()
